@@ -16,14 +16,23 @@ const ItemTitle = styled.span({
   marginBottom: '4px',
 });
 
-function Element({ element, passes }) {
+interface ElementProps {
+  element: {
+    any: Array<any>;
+    all: Array<any>;
+    none: Array<any>;
+  };
+  passes: boolean;
+}
+
+function Element({ element, passes }: ElementProps) {
   const { any, all, none } = element;
 
   const rules = [...any, ...all, ...none];
 
   return (
     <Item>
-      <ItemTitle>{element.target[0]}</ItemTitle>
+      <ItemTitle>{(element as any).target[0]}</ItemTitle>
       <Rules rules={rules} passes={passes} />
     </Item>
   );
@@ -37,8 +46,17 @@ Element.propTypes = {
   passes: PropTypes.bool.isRequired,
 };
 
+interface ElementsProps {
+  elements: Array<{
+    any: Array<any>;
+    all: Array<any>;
+    none: Array<any>;
+  }>;
+  passes: boolean;
+}
+
 /* eslint-disable react/no-array-index-key */
-const Elements = ({ elements, passes }) => (
+const Elements = ({ elements, passes }: ElementsProps) => (
   <ol>
     {elements.map((element, index) => (
       <Element passes={passes} element={element} key={index} />

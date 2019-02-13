@@ -55,10 +55,7 @@ if (module && module.hot && module.hot.decline) {
 }
 
 // TODO: REMOVE at v6.0.0
-export const checkA11y = deprecate(
-  (...args) => withA11Y(...args),
-  'checkA11y has been replaced with withA11Y'
-);
+export const checkA11y = deprecate((...args) => withA11Y(...args), 'checkA11y has been replaced with withA11Y');
 
 // TODO: REMOVE at v6.0.0
 export const configureA11y = deprecate(
