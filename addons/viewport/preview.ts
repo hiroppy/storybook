@@ -1,4 +1,4 @@
-const preview = require('./dist/legacy_preview/index');
+import * as preview from './src/legacy_preview';
 
 exports.configureViewport = preview.configureViewport;
 exports.DEFAULT_VIEWPORT = preview.DEFAULT_VIEWPORT;

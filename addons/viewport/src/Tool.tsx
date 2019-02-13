@@ -24,7 +24,10 @@ const createItem = memoize(1000)((id, name, value, change) => ({
   value,
 }));
 
-const flip = ({ width, height }) => ({ height: width, width: height });
+const flip = ({ width, height }: { width: number; height: number }) => ({
+  height: width,
+  width: height,
+});
 
 const getState = memoize(10)((props, state, change) => {
   const data = props.api.getCurrentStoryData();
@@ -33,7 +36,7 @@ const getState = memoize(10)((props, state, change) => {
   const selected =
     state.selected === 'responsive' || list.find(i => i.id === state.selected)
       ? state.selected
-      : list.find(i => i.default) || 'responsive';
+      : list.find((i: any) => i.default) || 'responsive';
 
   const resets =
     selected !== 'responsive'
@@ -65,8 +68,21 @@ const getState = memoize(10)((props, state, change) => {
   };
 });
 
-export default class ViewportTool extends Component {
-  constructor(props) {
+interface Props {
+  api: any;
+}
+
+interface State {
+  isRotated: boolean;
+  items: [];
+  selected: 'responsive';
+  expanded: boolean;
+}
+
+export default class ViewportTool extends Component<Props, State> {
+  listener: () => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -119,7 +135,7 @@ export default class ViewportTool extends Component {
           placement="top"
           trigger="click"
           tooltipShown={expanded}
-          onVisibilityChange={s => this.setState({ expanded: s })}
+          onVisibilityChange={(s: boolean) => this.setState({ expanded: s })}
           tooltip={<TooltipLinkList links={items} />}
           closeOnClick
         >
